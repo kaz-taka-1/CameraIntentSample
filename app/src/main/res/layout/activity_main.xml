@@ -5,7 +5,7 @@
     android:id="@+id/ivCamera"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="center"
+    android:layout_gravity="center"
     android:onClick="onCameraImageClick"
     android:scaleType="center"
     app:srcCompat="@android:drawable/ic_menu_camera"/>
