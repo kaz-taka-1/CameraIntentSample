@@ -1,5 +1,6 @@
 package com.websarva.wings.android.cameraintentsample
 
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.media.Image
@@ -9,6 +10,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     private var _imageUri: Uri? = null
@@ -27,7 +30,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onCameraImageClick(view: View){
+        val dateFormat = SimpleDateFormat("yyyyMMddHHmmss")
+        val now = Date()
+        val nowStr = dateFormat.format(now)
+        val fileName = "CameraIntentSamplePhoto_${nowStr}.jpg"
+        val values =ContentValues()
+        values.put(MediaStore.Images.Media.TITLE,fileName)
+        values.put(MediaStore.Images.Media.MIME_TYPE,"image/jpeg")
+
+        _imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values)
+
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,_imageUri)
         startActivityForResult(intent,200)
     }
 }
